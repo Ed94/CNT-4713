@@ -45,8 +45,6 @@ class Assignment2:
 
 			doubledList.append(element);
 
-		print(doubledList);
-
 		return doubledList;
 
 
@@ -56,19 +54,13 @@ class Assignment2:
 
 		nameLength = len(name);
 
-		print(nameList);
-
 		index = 1;
 
 		for element in nameList :
 
-			print("Index: " + str(index));
-
 			if (index % 3) == 0 and index >= 3 :
 
 				nameList[index - 1] = element.upper();
-
-				print(nameList);
 
 			if (index % 4) == 0 and index >= 4 :
 
@@ -76,15 +68,11 @@ class Assignment2:
 
 					nameList[index - 1] = element.lower();	
 
-					print(nameList);
-
 			if (index % 5) == 0 and index >= 5 :
 
 				if (index % 3) != 0 or (index % 4) != 0 :
 
 					nameList[index - 1] = " ";
-
-					print(nameList);
 
 			index = index + 1;
 
@@ -142,8 +130,6 @@ class Assignment2:
 
 		except socket.gaierror:
 
-			print("Error resolving the host address.");
-
 			return False;
 
 		try:
@@ -155,8 +141,6 @@ class Assignment2:
 			return True;
 
 		except socket.error as what :
-
-			print("Failed to create socket: " %(what) );
 
 			return False;
 
