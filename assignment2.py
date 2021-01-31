@@ -28,7 +28,7 @@ class Assignment2:
 
 		doubledList = list();
 
-		for element in islice(input, 0, inputHalfPoint) :
+		for element in islice(input, 0, inputLength) :
 		
 			doubleString = element + element;
 
