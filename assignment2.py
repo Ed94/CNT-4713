@@ -82,6 +82,7 @@ class Assignment2:
 	def isGoodPassword(password) :
 
 		if len(password) < 9 : 
+			
 			return False;
 
 		lowerChars     = 0;
@@ -117,7 +118,7 @@ class Assignment2:
 
 		else:
 			
-			return True;
+			return False;
 
 
 	def connectTcp(self, host, port) :
