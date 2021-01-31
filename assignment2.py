@@ -70,7 +70,7 @@ class Assignment2:
 
 			if (index % 5) == 0 and index >= 5 :
 
-				if (index % 3) != 0 or (index % 4) != 0 :
+				if (index % 3) != 0 and (index % 4) != 0 :
 
 					nameList[index - 1] = " ";
 
@@ -82,7 +82,7 @@ class Assignment2:
 	def isGoodPassword(password) :
 
 		if len(password) < 9 : 
-			
+
 			return False;
 
 		lowerChars     = 0;
@@ -112,7 +112,7 @@ class Assignment2:
 
 				numRequirement = 1;
 
-		if lowerChars >= 2 or upperChars >= 3  and specialChars >= 2 or numRequirement != 0 :
+		if (lowerChars >= 2 or upperChars >= 3)  and (specialChars >= 2 or numRequirement != 0) :
 
 			return True;
 
