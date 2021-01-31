@@ -24,7 +24,7 @@ class Assignment2:
 		inputLength    = len(input);
 		inputHalfPoint = int(inputLength / 2);
 
-		doubledList = input;
+		doubledList = list();
 
 		for element in islice(input, 0, inputHalfPoint) :
 		
