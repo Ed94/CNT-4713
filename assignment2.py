@@ -16,7 +16,7 @@ class Assignment2:
 
 	def sayWelcome(self, name) :
 
-		print("Welcome to the assignment, " + name + "! " + "Havent seen you for " + str(self.age) + " years!");
+		print("Welcome to the assignment, " + name + "!" + "Havent seen you for " + str(self.age) + " years!");
 
 
 	def doubleList(self, input) :
@@ -79,7 +79,7 @@ class Assignment2:
 		return ''.join(nameList);
 
 
-	def isGoodPassword(self, password) :
+	def isGoodPassword(password) :
 
 		if len(password) < 9 : 
 			return False;
