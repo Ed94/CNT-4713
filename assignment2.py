@@ -2,6 +2,8 @@ from itertools import islice;
 
 import socket;
 
+import math;
+
 
 
 class Assignment2:
@@ -22,7 +24,7 @@ class Assignment2:
 	def doubleList(self, input) :
 	
 		inputLength    = len(input);
-		inputHalfPoint = int(inputLength / 2);
+		inputHalfPoint = math.trunc(inputLength / 2);
 
 		doubledList = list();
 
@@ -35,15 +37,17 @@ class Assignment2:
 		postHalfOdd  = inputHalfPoint    ;
 		postHalfEven = inputHalfPoint + 1;
 
-		# Step odd.
-		for element in islice(input, postHalfOdd, inputLength, 2) :
+		finalSort = list();
 
-			doubledList.append(element);
+		# Step odd.
+		for element in islice(doubledList, 0, inputLength, 2) :
+
+			finalSort.append(element);
 
 		# Step even.
-		for element in islice(input, postHalfEven, inputLength, 2) :
+		for element in islice(doubledList, 1, inputLength, 2) :
 
-			doubledList.append(element);
+			finalSort.append(element);
 
 		return doubledList;
 
