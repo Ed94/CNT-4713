@@ -34,18 +34,18 @@ class Assignment2:
 
 			doubledList.append(doubleString);
 
+		finalSort = doubledList;
+
 		postHalfOdd  = inputHalfPoint    ;
 		postHalfEven = inputHalfPoint + 1;
 
-		finalSort = list();
-
 		# Step odd.
-		for element in islice(doubledList, 0, inputLength, 2) :
+		for element in islice(input, 0, inputLength, 2) :
 
 			finalSort.append(element);
 
 		# Step even.
-		for element in islice(doubledList, 1, inputLength, 2) :
+		for element in islice(input, 1, inputLength, 2) :
 
 			finalSort.append(element);
 
