@@ -49,6 +49,8 @@ def ProcessConnection() :
 
 				SocketConnection.settimeout(None);
 
+				timeTillCut += 600;
+
 				SocketConnection.send( File.read() );
 
 				Persist = False;
