@@ -7,8 +7,6 @@ import sys;
 
 
 
-Persist = True;
-
 Hostname = str();
 Port     = int();
 Filename = None;
@@ -26,6 +24,8 @@ def ProcessConnection() :
 	deadline = 10.0;
 
 	SocketConnection.settimeout(deadline);
+
+	Persist = True;
 
 	while Persist :
 
@@ -108,7 +108,7 @@ def EntryPoint() :
 
 	except socket.error as what :
 
-		sys.stderr.write("ERROR: Could not establish socket connection: " + what.strerror + "\n");
+		sys.stderr.write("ERROR: Could not establish socket connection: " + repr(what) + "\n");
 		
 		sys.exit(1);
 
