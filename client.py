@@ -13,7 +13,54 @@ Port     = int();
 Filename = None;
 
 HostIP           = int();
-SocketConnection = None;
+SocketConnection = socket.socket;
+
+File = None;
+Data = bytes();
+
+
+
+def WriteToFile() :
+
+	global File;
+
+	if (File == None) :
+
+		File = open(Filename, "wb");
+
+	try :
+
+		global Data;
+
+		File.write(Data);
+
+
+
+def ProcessConnection() :
+
+	deadline = 10.0;
+
+	try :
+
+		SocketConnection.settimeout(deadline);
+
+		while Persist :
+
+			global Data;
+
+			Data = SocketConnection.recv(1024);
+
+			if (Data) :
+			
+				print ("Recived: " + repr(Data));
+
+				WriteToFile();
+
+	except socket.error as what :
+
+		sys.stderr.write("ERROR: Socket related..." + what.strerror + "\n");
+		
+		sys.exit(1);
 
 
 
@@ -41,9 +88,11 @@ def ConnectTCP() :
 
 		print("Sucessfuly connected.");
 
+		ProcessConnection();
+
 	except OverflowError as what :
 
-		sys.stderr.write("ERROR: Invalid Port. Info: " + what + "\n");
+		sys.stderr.write("ERROR: Invalid Port. Info: " + repr(what) + "\n");
 
 	except socket.error as what :
 
@@ -69,40 +118,11 @@ def ParseArguments() :
 
 
 
-def ProcessConnection() :
-
-	deadline = 10.0;
-
-	try :
-
-		data = bytes();
-
-		while Persist :
-	
-			SocketConnection.settimeout(deadline);
-
-			data = SocketConnection.read();
-
-			if (data) :
-			
-				print ("Recived: " + repr(data));
-
-	except socket.error as what :
-
-		sys.stderr.write("ERROR: Socket related..." + what.strerror + "\n");
-		
-		sys.exit(1);	
-
-
-
 def EntryPoint() :
 
 	ParseArguments();
 
 	ConnectTCP();
-
-	ProcessConnection();
-
 
 
 
