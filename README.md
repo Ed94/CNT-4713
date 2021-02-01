@@ -13,12 +13,14 @@ You are encouraged to host your code in private repositories on [GitHub](https:/
 
 ## Notes
 
-This is the first commit. I do not expect the code to work. I'm merely testing to see how far it goes...
+Went well. Pretty rusty with python since I don't really use it anymore. Review videos provided by professor were good. 
 
 
 ## Problems
 
 Understanding if server.py was required for this setup... (It was not specified in the project outline).
+
+How much socket.settimeout did for me vs what I had to do was not clear. 
 
 
 ## Tutorials Used

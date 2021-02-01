@@ -29,11 +29,9 @@ def ProcessConnection() :
 
 	timeTillCut = time.time() + deadline;
 
-	timed = True;
-
 	while Persist :
 
-		if timed and (time.time() >= timeTillCut) :
+		if (time.time() >= timeTillCut) :
 
 			raise Exception("Timed out");
 
@@ -48,8 +46,6 @@ def ProcessConnection() :
 			if (Data.decode("utf-8") == "accio\r\n") :
 
 				global File;
-
-				timed = False;
 
 				SocketConnection.send( File.read() );
 
