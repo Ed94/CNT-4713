@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse;
+import io;
 import socket;
 import sys;
 
@@ -15,28 +16,8 @@ Filename = None;
 HostIP           = int();
 SocketConnection = socket.socket;
 
-File = None;
+File = io.TextIOWrapper;
 Data = bytes();
-
-
-
-def WriteToFile() :
-
-	global File;
-
-	if (File == None) :
-
-		File = open(Filename, "wb");
-
-	try :
-
-		global Data;
-
-		File.write(Data);
-
-	except Exception as what :
-
-		sys.stderr.write("ERROR: " + repr(what));
 
 
 
@@ -44,66 +25,38 @@ def ProcessConnection() :
 
 	deadline = 10.0;
 
-	try :
+	SocketConnection.settimeout(deadline);
 
-		SocketConnection.settimeout(deadline);
+	while Persist :
 
-		while Persist :
+		global Data;
 
-			global Data;
+		Data = SocketConnection.recv(1024);
 
-			Data = SocketConnection.recv(1024);
-
-			if (Data) :
-			
-				print ("Recived: " + repr(Data));
-
-				WriteToFile();
-
-	except socket.error as what :
-
-		sys.stderr.write("ERROR: Socket related..." + what.strerror + "\n");
+		if (Data) :
 		
-		sys.exit(1);
-		
+			print ("Recived: " + repr(Data));
+
+			if (Data == "accio\r\n") :
+
+				SocketConnection.send( File.read() );
 
 
 
 def ConnectTCP() :
 
 	global HostIP;
+	global SocketConnection;
 
-	try:
+	HostIP = socket.gethostbyname(Hostname);
 
-		HostIP = socket.gethostbyname(Hostname);
+	print("Host IP: " + HostIP);
 
-		print("Host IP: " + HostIP);
+	SocketConnection = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 
-	except socket.gaierror:
+	SocketConnection.settimeout(10);
 
-		sys.stderr.write("ERROR: Could not retieve host's address. \n");
-
-		sys.exit(1);
-
-	try:
-
-		SocketConnection = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
-
-		SocketConnection.connect( (HostIP, Port) );
-
-		print("Sucessfuly connected.");
-
-		ProcessConnection();
-
-	except OverflowError as what :
-
-		sys.stderr.write("ERROR: Invalid Port. Info: " + repr(what) + "\n");
-
-	except socket.error as what :
-
-		sys.stderr.write("ERROR: Could not establish socket connection: " + what.strerror + "\n");
-		
-		sys.exit(1);
+	SocketConnection.connect( (HostIP, Port) );
 
 
 
@@ -127,9 +80,41 @@ def EntryPoint() :
 
 	ParseArguments();
 
-	ConnectTCP();
+	try : 
 
-	File.close();
+		File = open(Filename, "rb");
+
+		ConnectTCP();
+
+		print("Sucessfuly connected.");
+
+		ProcessConnection();
+
+		File.close();
+
+	except socket.gaierror:
+
+		sys.stderr.write("ERROR: Could not retieve host's address. \n");
+
+		sys.exit(1)
+
+	except OverflowError as what :
+
+		sys.stderr.write("ERROR: Invalid Port. Info: " + repr(what) + "\n");
+
+		sys.exit(1);
+
+	except socket.error as what :
+
+		sys.stderr.write("ERROR: Could not establish socket connection: " + what.strerror + "\n");
+		
+		sys.exit(1);
+
+	except Exception  as what :
+
+		sys.stderr.write("ERROR: " + repr(what) + "\n");
+
+		sys.exit(1);
 
 
 
