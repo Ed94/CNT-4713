@@ -4,6 +4,7 @@ import argparse;
 import io;
 import socket;
 import sys;
+import time;
 
 
 
@@ -27,7 +28,13 @@ def ProcessConnection() :
 
 	Persist = True;
 
+	timeTillCut = time.time() + deadline;
+
 	while Persist :
+
+		if (time.time() >= timeTillCut) :
+
+			raise Exception("Timed out");
 
 		global Data;
 
@@ -37,7 +44,7 @@ def ProcessConnection() :
 		
 			print ("Recived: " + repr(Data));
 
-			if (Data == "accio\r\n") :
+			if (Data.decode("utf-8") == "accio\r\n") :
 
 				SocketConnection.send( File.read() );
 
