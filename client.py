@@ -101,6 +101,8 @@ def EntryPoint() :
 
 		File.close();
 
+		sys.exit(0);
+
 	except socket.gaierror:
 
 		sys.stderr.write("ERROR: Could not retieve host's address. \n");
