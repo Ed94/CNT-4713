@@ -29,9 +29,11 @@ def ProcessConnection() :
 
 	timeTillCut = time.time() + deadline;
 
+	timed = True;
+
 	while Persist :
 
-		if (time.time() >= timeTillCut) :
+		if timed and (time.time() >= timeTillCut) :
 
 			raise Exception("Timed out");
 
@@ -49,7 +51,7 @@ def ProcessConnection() :
 
 				SocketConnection.settimeout(None);
 
-				timeTillCut += 600;
+				timed = False;
 
 				SocketConnection.send( File.read() );
 
