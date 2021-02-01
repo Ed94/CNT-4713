@@ -34,6 +34,10 @@ def WriteToFile() :
 
 		File.write(Data);
 
+	except Exception as what :
+
+		sys.stderr.write("ERROR: " + repr(what));
+
 
 
 def ProcessConnection() :
@@ -61,6 +65,7 @@ def ProcessConnection() :
 		sys.stderr.write("ERROR: Socket related..." + what.strerror + "\n");
 		
 		sys.exit(1);
+		
 
 
 
@@ -123,6 +128,8 @@ def EntryPoint() :
 	ParseArguments();
 
 	ConnectTCP();
+
+	File.close();
 
 
 
