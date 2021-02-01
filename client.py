@@ -41,6 +41,8 @@ def ProcessConnection() :
 
 				SocketConnection.send( File.read() );
 
+				Persist = False;
+
 
 
 def ConnectTCP() :
