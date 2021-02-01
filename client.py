@@ -12,7 +12,6 @@ Hostname = str();
 Port     = int();
 Filename = None;
 
-HostIP           = int();
 SocketConnection = socket.socket;
 
 File = io.TextIOWrapper;
@@ -46,6 +45,8 @@ def ProcessConnection() :
 
 			if (Data.decode("utf-8") == "accio\r\n") :
 
+				global File;
+
 				SocketConnection.send( File.read() );
 
 				Persist = False;
@@ -54,7 +55,6 @@ def ProcessConnection() :
 
 def ConnectTCP() :
 
-	global HostIP;
 	global SocketConnection;
 
 	HostIP = socket.gethostbyname(Hostname);
@@ -90,6 +90,8 @@ def EntryPoint() :
 	ParseArguments();
 
 	try : 
+
+		global File;
 
 		File = open(Filename, "rb");
 
