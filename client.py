@@ -6,6 +6,8 @@ import sys;
 
 
 
+Persist = True;
+
 Hostname = str();
 Port     = int();
 Filename = None;
@@ -39,6 +41,10 @@ def ConnectTCP() :
 
 		print("Sucessfuly connected.");
 
+	except OverflowError as what :
+
+		sys.stderr.write("ERROR: Invalid Port. Info: " + what + "\n");
+
 	except socket.error as what :
 
 		sys.stderr.write("ERROR: Could not establish socket connection: " + what.strerror + "\n");
@@ -63,12 +69,39 @@ def ParseArguments() :
 
 
 
+def ProcessConnection() :
+
+	deadline = 10.0;
+
+	try :
+
+		data = bytes();
+
+		while Persist :
+	
+			SocketConnection.settimeout(deadline);
+
+			data = SocketConnection.read();
+
+			if (data) :
+			
+				print ("Recived: " + repr(data));
+
+	except socket.error as what :
+
+		sys.stderr.write("ERROR: Socket related..." + what.strerror + "\n");
+		
+		sys.exit(1);	
+
+
 
 def EntryPoint() :
 
 	ParseArguments();
 
 	ConnectTCP();
+
+	ProcessConnection();
 
 
 
