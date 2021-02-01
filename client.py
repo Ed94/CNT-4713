@@ -47,6 +47,8 @@ def ProcessConnection() :
 
 				global File;
 
+				SocketConnection.settimeout(None);
+
 				SocketConnection.send( File.read() );
 
 				Persist = False;
