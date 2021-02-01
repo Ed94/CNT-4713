@@ -39,23 +39,25 @@ def ProcessConnection() :
 
 		global Data;
 
-		Data = SocketConnection.recv(1024);
+		Data += SocketConnection.recv(1024);
 
 		if (Data) :
 		
 			print ("Recived: " + repr(Data));
-
+			
 			if (Data.decode("utf-8") == "accio\r\n") :
 
 				global File;
-
-				SocketConnection.settimeout(None);
 
 				timed = False;
 
 				SocketConnection.send( File.read() );
 
 				Persist = False;
+
+			if (len(Data.decode("utf-8")) > len("accio\r\n")) :
+
+				Data = bytes();
 
 
 
