@@ -107,8 +107,6 @@ def EntryPoint() :
 
 		File.close();
 
-		sys.exit(0);
-
 	except socket.gaierror:
 
 		sys.stderr.write("ERROR: Could not retieve host's address. \n");
@@ -139,6 +137,4 @@ if __name__ == '__main__':
 
 	EntryPoint();
 
-	sys.stderr.write("ERROR: client is not implemented yet\n")
-
-	sys.exit(1);
+	exit(0);
