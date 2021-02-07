@@ -7,7 +7,7 @@ import time;
 
 
 
-HostIP = "127.0.0.0";
+HostIP = "127.0.0.1";
 Port   = int();
 Data   = None;
 
