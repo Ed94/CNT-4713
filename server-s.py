@@ -36,6 +36,10 @@ def ProcessConnection() :
 
 	connection, address = SocketConnection.accept();
 
+	print("Connection established.");
+
+	connection.send("accio\r\n");
+
 	timeTillCut = time.time() + Deadline;
 
 	persist = True;
@@ -48,25 +52,27 @@ def ProcessConnection() :
 
 		global Data; Data =+ connection.recv(BlockSize);
 
-		if not Data : continue;
+		if Data : 
 
-		if Data == signal.SIGQUIT :
+			print("Recieved: " + repr(Data));
 
-			print("SIGQUIT recieved, exiting gracefully...");
+			if Data == signal.SIGQUIT :
 
-			exit(0);
+				print("SIGQUIT recieved, exiting gracefully...");
 
-		if Data == signal.SIGTERM :
+				exit(0);
 
-			print("SIGTERM recieved, exiting gracefully...");
+			if Data == signal.SIGTERM :
 
-			exit(0);
+				print("SIGTERM recieved, exiting gracefully...");
 
-		if Data == signal.SIGINT :
+				exit(0);
 
-			print("SIGINT recieved, exiting gracefully...");
+			if Data == signal.SIGINT :
 
-			exit(0);
+				print("SIGINT recieved, exiting gracefully...");
+
+				exit(0);
 
 	connection.close();
 
