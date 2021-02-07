@@ -30,13 +30,29 @@ def Connect() :
 
 
 
+def ListenForConnections() :
+
+	persist = True;
+
+	while persist :
+
+		socket.listen();
+
+		print("Listening for incoming connections on: " + str(Port));
+
+		ProcessConnection();
+
+		time.sleep(1);
+
+
+
 def ProcessConnection() :
 
 	global BlockSize, Deadline;
 
 	connection, address = SocketConnection.accept();
 
-	print("Connection established.");
+	print("Connection established with: ", address);
 
 	connection.send("accio\r\n");
 
@@ -86,11 +102,7 @@ def Entrypoint() :
 
 		Connect();	
 
-		socket.listen();
-
-		print("Listening for incoming connections on: " + str(Port));
-
-		ProcessConnection();
+		ListenForConnections();
 
 		SocketConnection.close();
 
