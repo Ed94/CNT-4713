@@ -78,7 +78,7 @@ def ProcessConnection() :
 
 			# print("Recived: " + recivedData.decode("utf-8"));
 
-			timeTillCut += 0.1;
+			timeTillCut = time.time() + 0.1;
 
 			Data += recivedData;
 
@@ -94,7 +94,7 @@ def ProcessConnection() :
 
 			persist = False;
 
-	print(Data.decode("utf-8"));
+	print(len(Data.decode("utf-8")));
 
 	connection.close();
 
