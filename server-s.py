@@ -16,7 +16,7 @@ SocketConnection = socket.socket;
 
 
 Deadline  = 10.0;
-BlockSize = 1024;
+BlockSize = 10000;
 
 
 
@@ -147,7 +147,5 @@ def Entrypoint() :
 if __name__ == '__main__':
 
 	Entrypoint();
-
-	# sys.stdout.flush();
 
 	sys.exit(0);
