@@ -56,6 +56,8 @@ def ProcessConnection() :
 
 	connection, address = SocketConnection.accept();
 
+	connection.settimeout(10);
+
 	try:
 
 		Data = bytes();
@@ -64,21 +66,27 @@ def ProcessConnection() :
 
 		persist = True;
 
+		timeTillCut = time.time() + 0.1;
+
 		while persist :
 
 			recivedData = bytes();
 
-			connection.settimeout(10);
-
 			recivedData = connection.recv(BlockSize);
 
 			if recivedData : 
+
+				timeTillCut = time.time() + 0.1;
 
 				Data += recivedData;
 
 				if Data == signal.SIGINT or Data.decode("utf-8") == "quit":
 
 					return True;
+
+			if time.time() > timeTillCut :
+
+				break;
 
 		print(len(Data.decode("utf-8")));
 
@@ -89,6 +97,8 @@ def ProcessConnection() :
 	except Exception  as what :
 
 		if repr(what) == "timed out" :
+
+			sys.stderr.write("ERROR: " + repr(what) + "\n");
 
 			connection.close();
 
