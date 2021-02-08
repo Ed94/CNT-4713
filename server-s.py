@@ -40,15 +40,33 @@ def ListenForConnections() :
 
 	SocketConnection.listen(10);
 
+
 	while persist :
 
-		# print("Listening for incoming connections on: " + str(Port));
+		try :
+			code = ProcessConnection();
 
-		if ProcessConnection() == True :
+			if code == 0 : 
+				
+				return;
+
+			elif code == 2 : 
+				
+				raise RuntimeError("Timed out");
+
+			time.sleep(0.1);
+
+		except RuntimeError  as what : 
+
+			sys.stderr.write("ERROR: " + repr(what) + "\n");	
+
+			time.sleep(0.1);
+
+		except Exception as what :
+
+			sys.stderr.write("ERROR: " + repr(what) + "\n");		
 
 			return;
-
-		time.sleep(0.1);
 
 
 
@@ -90,13 +108,15 @@ def ProcessConnection() :
 
 				# print("SIGINT recieved, exiting gracefully...");
 
-				return True;
+				return 0;
 
 		if (deadlineForFirstMessage > 0.0 and time.time() >= deadlineForFirstMessage) :
 
 			# print("No more data recived within time, exiting gracefully");
 
-			raise Exception("Timed out.")
+			connection.close();
+
+			return 2;
 
 		elif (timeTillCut > 0.0 and time.time() >= timeTillCut) :
 
@@ -104,13 +124,9 @@ def ProcessConnection() :
 
 	print(len(Data.decode("utf-8")));
 
-	# sys.stdout.write(str(len(Data)));
-
-	# sys.stdout.flush();
-
 	connection.close();
 
-	return False;
+	return 1;
 
 
 
@@ -130,19 +146,19 @@ def Entrypoint() :
 
 	except OverflowError as what :
 
-		sys.stderr.write("ERROR: Invalid Port. Info: " + repr(what));
+		sys.stderr.write("ERROR: Invalid Port. Info: " + repr(what) + "\n");
 
 		sys.exit(1);
 
 	except socket.error as what :
 
-		sys.stderr.write("ERROR: Could not establish socket connection: " + repr(what));
+		sys.stderr.write("ERROR: Could not establish socket connection: " + repr(what) + "\n");
 		
 		sys.exit(1);
 
 	except Exception  as what :
 
-		sys.stderr.write("ERROR: " + repr(what));
+		sys.stderr.write("ERROR: " + repr(what) + "\n");
 
 		sys.exit(1);
 
