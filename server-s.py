@@ -104,7 +104,7 @@ def Entrypoint() :
 
 	try: 
 
-		Port = sys.argv[1];
+		Port = int(sys.argv[1]);
 
 		Connect();	
 
