@@ -104,11 +104,9 @@ def ProcessConnection() :
 
 	# print(len(Data.decode("utf-8")));
 
-	sys.stdout.flush();
-	sys.stdout.flush();
-	sys.stdout.flush();
+	sys.stdout.write(str(len(Data)));
 
-	sys.stdout.write(str(len(Data.decode("utf-8"))));
+	sys.stdout.flush();
 
 	connection.close();
 
