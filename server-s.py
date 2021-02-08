@@ -64,6 +64,8 @@ def ProcessConnection() :
 
 	while persist :
 
+		recivedData = bytes();
+
 		recivedData = connection.recv(BlockSize);
 
 		if recivedData : 
