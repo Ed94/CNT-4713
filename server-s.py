@@ -36,7 +36,7 @@ def ListenForConnections() :
 
 	persist = True;
 
-	SocketConnection.listen();
+	SocketConnection.listen(10);
 
 	while persist :
 
@@ -71,6 +71,8 @@ def ProcessConnection() :
 		global Data; Data =+ connection.recv(BlockSize);
 
 		if Data : 
+
+			timeTillCut += Deadline;
 
 			print("Recieved: " + repr(Data));
 
