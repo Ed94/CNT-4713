@@ -90,7 +90,7 @@ def ProcessConnection() :
 
 					return True;
 
-		print(len(Data.decode("utf-8")));
+		print(len(Data.decode("utf-8")) + "bytes");
 
 		connection.close();
 
