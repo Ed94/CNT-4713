@@ -36,9 +36,9 @@ def ListenForConnections() :
 
 	persist = True;
 
-	SocketConnection.listen(10);
-
 	while persist :
+
+		SocketConnection.listen(10);
 
 		print("Listening for incoming connections on: " + str(Port));
 
