@@ -148,6 +148,6 @@ if __name__ == '__main__':
 
 	Entrypoint();
 
-	sys.stdout.flush();
+	# sys.stdout.flush();
 
 	sys.exit(0);
