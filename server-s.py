@@ -64,7 +64,7 @@ def ProcessConnection() :
 
 	connection.send("accio\r\n".encode());
 
-	timeTillCut = time.time() + Deadline;
+	timeTillCut = 0.0;
 
 	deadlineForFirstMessage = time.time() + Deadline;
 
@@ -79,10 +79,10 @@ def ProcessConnection() :
 		if recivedData : 
 
 			deadlineForFirstMessage = 0.0;
+			
+			timeTillCut = time.time() + 0.1;
 
 			# print("Recived: " + recivedData.decode("utf-8"));
-
-			# timeTillCut = time.time() + 0.1;
 
 			Data += recivedData;
 
@@ -98,9 +98,9 @@ def ProcessConnection() :
 
 			raise Exception("Timed out.")
 
-		# elif (time.time() >= timeTillCut) :
+		elif (timeTillCut > 0.0 and time.time() >= timeTillCut) :
 
-		# 	persist = False;
+			persist = False;
 
 	# print(len(Data.decode("utf-8")));
 
