@@ -40,11 +40,7 @@ def ListenForConnections() :
 
 	SocketConnection.listen(10);
 
-	# SocketConnection.setblocking(False);
-
 	while persist :
-
-		# SocketConnection.listen(10);
 
 		# print("Listening for incoming connections on: " + str(Port));
 
@@ -90,17 +86,15 @@ def ProcessConnection() :
 
 				persist = False;
 
-				# exit(0);
-
 		if (time.time() >= timeTillCut) :
 
-			# print("Exiting persist loop.");
+			# print("No more data recived within time, exiting gracefully");
 
 			persist = False;
 
 	# print(len(Data.decode("utf-8")));
 
-	sys.stdout.write(len(Data.decode("utf-8")));
+	sys.stdout.write(len(Data));
 
 	connection.close();
 
