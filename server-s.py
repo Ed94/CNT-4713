@@ -13,6 +13,8 @@ Data   = bytes();
 
 SocketConnection = socket.socket;
 
+
+
 Deadline  = 10.0;
 BlockSize = 1024;
 
@@ -48,7 +50,7 @@ def ListenForConnections() :
 
 		ProcessConnection();
 
-		time.sleep(1);
+		time.sleep(0.1);
 
 
 
