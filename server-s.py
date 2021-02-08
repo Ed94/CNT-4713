@@ -66,7 +66,7 @@ def ProcessConnection() :
 
 		persist = True;
 
-		timeTillCut = time.time() + 0.1;
+		timeTillCut = time.time() + Deadline;
 
 		while persist :
 
@@ -90,7 +90,7 @@ def ProcessConnection() :
 
 					return True;
 
-		print(len(Data.decode("utf-8")) + "bytes");
+		print(len(Data.decode("utf-8")));
 
 		connection.close();
 
