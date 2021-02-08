@@ -80,6 +80,8 @@ def ProcessConnection() :
 
 			if recivedData : 
 
+				print ("Recieved: " + repr(Data));
+
 				timeTillCut = time.time() + Deadline;
 
 				Data += recivedData;
