@@ -86,10 +86,6 @@ def ProcessConnection() :
 
 				persist = False;
 
-				sys.stdout.flush();
-				sys.stdout.flush();
-				sys.stdout.flush();
-
 		if (time.time() >= timeTillCut) :
 
 			# print("No more data recived within time, exiting gracefully");
@@ -97,6 +93,10 @@ def ProcessConnection() :
 			persist = False;
 
 	# print(len(Data.decode("utf-8")));
+
+	sys.stdout.flush();
+	sys.stdout.flush();
+	sys.stdout.flush();
 
 	sys.stdout.write(len(Data.decode("utf-8")));
 
