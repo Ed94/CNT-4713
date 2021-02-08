@@ -102,7 +102,7 @@ def ProcessConnection() :
 
 			persist = False;
 
-	print(len(Data.decode("utf-8")));
+	print(Data);
 
 	# sys.stdout.write(str(len(Data)));
 
