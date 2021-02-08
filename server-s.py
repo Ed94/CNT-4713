@@ -44,7 +44,7 @@ def ListenForConnections() :
 
 		if ProcessConnection() == True :
 
-			return;
+			return False;
 
 		time.sleep(1);
 
@@ -80,8 +80,6 @@ def ProcessConnection() :
 
 			if recivedData : 
 
-				print ("Recieved: " + repr(Data));
-
 				timeTillCut = time.time() + Deadline;
 
 				Data += recivedData;
@@ -102,13 +100,17 @@ def ProcessConnection() :
 
 			sys.stderr.write("ERROR: " + repr(what) + "\n");
 
+			sys.stderr.flush();
+
 			connection.close();
 
 			return False;
 
 		sys.stderr.write("ERROR: " + repr(what) + "\n");
 
-		return True;
+		sys.stderr.flush();
+
+		sys.exit(1);
 
 
 
@@ -122,7 +124,7 @@ def Entrypoint() :
 
 		Connect();	
 
-		ListenForConnections();
+		ListenForConnections()
 
 		SocketConnection.close();
 
