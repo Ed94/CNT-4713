@@ -66,7 +66,7 @@ def ProcessConnection() :
 
 		persist = True;
 
-		timeTillCut = time.time() + Deadline;
+		timeTillCut = time.time() + 0.1;
 
 		while persist :
 
@@ -80,7 +80,7 @@ def ProcessConnection() :
 
 			if recivedData : 
 
-				timeTillCut = time.time() + Deadline;
+				timeTillCut = time.time() + 0.1;
 
 				Data += recivedData;
 
