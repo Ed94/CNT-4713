@@ -32,45 +32,25 @@ def Connect() :
 
 def ListenForConnections() :
 
-	try :
+	global SocketConnection;
 
-		global SocketConnection;
+	persist = True;
 
-		persist = True;
+	SocketConnection.listen(10);
 
-		SocketConnection.listen(10);
+	while persist :
 
-		while persist :
+		print("Listening for incoming connections on: " + str(Port));
 
-			print("Listening for incoming connections on: " + str(Port));
+		ProcessConnection();
 
-			ProcessConnection();
-
-			time.sleep(1);
-
-	except OverflowError as what :
-
-		sys.stderr.write("ERROR: Invalid Port. Info: " + repr(what) + "\n");
-
-		sys.exit(1);
-
-	except socket.error as what :
-
-		sys.stderr.write("ERROR: Could not establish socket connection: " + repr(what) + "\n");
-		
-		sys.exit(1);
-
-	except Exception  as what :
-
-		sys.stderr.write("ERROR: " + repr(what) + "\n");
-
-		sys.exit(1);
+		time.sleep(1);
 
 
 
 def ProcessConnection() :
 
-	global BlockSize, Deadline, SocketConnection;
+	global BlockSize, Data, Deadline, SocketConnection;
 
 	connection, address = SocketConnection.accept();
 
@@ -88,7 +68,7 @@ def ProcessConnection() :
 
 			raise Exception("Connection timed out.");
 
-		global Data; Data =+ connection.recv(BlockSize);
+		Data =+ connection.recv(BlockSize);
 
 		if Data : 
 
@@ -120,7 +100,7 @@ def ProcessConnection() :
 
 def Entrypoint() :
 
-	global SocketConnection;
+	global Port, SocketConnection;
 
 	try: 
 
