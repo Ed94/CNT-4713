@@ -44,7 +44,7 @@ def ListenForConnections() :
 
 		if ProcessConnection() == True :
 
-			return False;
+			return;
 
 		time.sleep(1);
 
