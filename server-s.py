@@ -88,7 +88,9 @@ def ProcessConnection() :
 
 				# print("SIGINT recieved, exiting gracefully...");
 
-				exit(0);
+				persist = False;
+
+				# exit(0);
 
 		if (time.time() >= timeTillCut) :
 
