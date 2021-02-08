@@ -44,7 +44,9 @@ def ListenForConnections() :
 
 		# print("Listening for incoming connections on: " + str(Port));
 
-		ProcessConnection();
+		if ProcessConnection() == True :
+
+			break;
 
 		time.sleep(0.1);
 
@@ -84,7 +86,7 @@ def ProcessConnection() :
 
 				# print("SIGINT recieved, exiting gracefully...");
 
-				persist = False;
+				return True;
 
 		if (time.time() >= timeTillCut) :
 
@@ -101,6 +103,8 @@ def ProcessConnection() :
 	sys.stdout.write(len(Data.decode("utf-8")));
 
 	connection.close();
+
+	return False;
 
 
 
