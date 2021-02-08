@@ -9,7 +9,7 @@ import time;
 
 HostIP = "0.0.0.0";
 Port   = int();
-Data   = None;
+Data   = bytes();
 
 SocketConnection = socket.socket;
 
@@ -56,7 +56,7 @@ def ProcessConnection() :
 
 	print("Connection established with: ", address);
 
-	connection.send("accio\r\n");
+	connection.send("accio\r\n".encode());
 
 	timeTillCut = time.time() + Deadline;
 
@@ -68,31 +68,31 @@ def ProcessConnection() :
 
 			raise Exception("Connection timed out.");
 
-		Data =+ connection.recv(BlockSize);
+		Data += connection.recv(BlockSize);
 
 		if Data : 
 
-			timeTillCut += Deadline;
+			# if Data == signal.SIGQUIT :
 
-			print("Recieved: " + repr(Data));
+			# 	print("SIGQUIT recieved, exiting gracefully...");
 
-			if Data == signal.SIGQUIT :
+			# 	exit(0);
 
-				print("SIGQUIT recieved, exiting gracefully...");
+			# if Data == signal.SIGTERM :
 
-				exit(0);
+			# 	print("SIGTERM recieved, exiting gracefully...");
 
-			if Data == signal.SIGTERM :
-
-				print("SIGTERM recieved, exiting gracefully...");
-
-				exit(0);
+			# 	exit(0);
 
 			if Data == signal.SIGINT :
 
 				print("SIGINT recieved, exiting gracefully...");
 
 				exit(0);
+
+			persist = False;
+
+	print(repr(Data));
 
 	connection.close();
 

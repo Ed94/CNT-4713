@@ -4,7 +4,8 @@ import argparse;
 import io;
 import socket;
 import sys;
-import time;
+import time
+from typing import ByteString;
 
 
 
@@ -41,13 +42,17 @@ def ProcessConnection() :
 
 		if (Data) :
 		
-			print ("Recived: " + repr(Data));
+			print ("Recieved: " + repr(Data));
 			
 			if (Data.decode("utf-8") == "accio\r\n") :
 
-				global File;
+				# global File;
 
-				SocketConnection.send( File.read() );
+				# SocketConnection.send( File.read() );
+
+				message = input("Write something for meh: ");
+
+				SocketConnection.send(message.encode());
 
 				Persist = False;
 
@@ -81,11 +86,11 @@ def ParseArguments() :
 
 	Hostname = sys.argv[1];
 	Port     = int(sys.argv[2]);
-	Filename = sys.argv[3];
+	# Filename = sys.argv[3];
 
 	print("HostName: " + Hostname );
 	print("Port    : " + str(Port));
-	print("Filename: " + Filename );
+	# print("Filename: " + Filename );
 
 
 
@@ -95,9 +100,9 @@ def EntryPoint() :
 
 	try : 
 
-		global File;
+		# global File;
 
-		File = open(Filename, "rb");
+		# File = open(Filename, "rb");
 
 		ConnectTCP();
 
@@ -105,7 +110,7 @@ def EntryPoint() :
 
 		ProcessConnection();
 
-		File.close();
+		# File.close();
 
 	except socket.gaierror:
 
