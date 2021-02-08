@@ -76,7 +76,7 @@ def ProcessConnection() :
 
 			if recivedData : 
 
-				timeTillCut = time.time() + 0.5;
+				timeTillCut = time.time() + 0.01;
 
 				Data += recivedData;
 
