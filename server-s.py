@@ -7,7 +7,7 @@ import time;
 
 
 
-HostIP = "127.0.0.1";
+HostIP = "0.0.0.0";
 Port   = int();
 Data   = None;
 
@@ -20,21 +20,23 @@ BlockSize = 1024;
 
 def Connect() :
 
-	global Deadline, HostIP, Port;
+	global Deadline, HostIP, Port, SocketConnection;
 
 	SocketConnection = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 
 	SocketConnection.settimeout(Deadline);
 
-	SocketConnection.bind(HostIP, Port);
+	SocketConnection.bind( (HostIP, Port) );
 
 
 
 def ListenForConnections() :
 
+	global SocketConnection;
+
 	persist = True;
 
-	SocketConnection.listen(1);
+	SocketConnection.listen();
 
 	while persist :
 
@@ -48,7 +50,7 @@ def ListenForConnections() :
 
 def ProcessConnection() :
 
-	global BlockSize, Deadline;
+	global BlockSize, Deadline, SocketConnection;
 
 	connection, address = SocketConnection.accept();
 
@@ -95,6 +97,8 @@ def ProcessConnection() :
 
 
 def Entrypoint() :
+
+	global SocketConnection;
 
 	try: 
 
