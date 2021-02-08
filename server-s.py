@@ -46,7 +46,7 @@ def ListenForConnections() :
 
 		if ProcessConnection() == True :
 
-			break;
+			return;
 
 		time.sleep(0.1);
 
@@ -102,7 +102,7 @@ def ProcessConnection() :
 
 			persist = False;
 
-	print(Data);
+	print(len(Data.decode("utf-8")));
 
 	# sys.stdout.write(str(len(Data)));
 
@@ -130,19 +130,19 @@ def Entrypoint() :
 
 	except OverflowError as what :
 
-		sys.stderr.write("ERROR: Invalid Port. Info: " + repr(what) + "\n");
+		sys.stderr.write("ERROR: Invalid Port. Info: " + repr(what));
 
 		sys.exit(1);
 
 	except socket.error as what :
 
-		sys.stderr.write("ERROR: Could not establish socket connection: " + repr(what) + "\n");
+		sys.stderr.write("ERROR: Could not establish socket connection: " + repr(what);
 		
 		sys.exit(1);
 
 	except Exception  as what :
 
-		sys.stderr.write("ERROR: " + repr(what) + "\n");
+		sys.stderr.write("ERROR: " + repr(what));
 
 		sys.exit(1);
 
@@ -151,3 +151,5 @@ def Entrypoint() :
 if __name__ == '__main__':
 
 	Entrypoint();
+
+	sys.stdout.flush();
