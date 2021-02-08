@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import signal;
 import socket;
 import sys;
@@ -12,8 +10,6 @@ Port   = int();
 Data   = bytes();
 
 SocketConnection = socket.socket;
-
-
 
 Deadline  = 10.0;
 BlockSize = 10000;
@@ -66,7 +62,7 @@ def ProcessConnection() :
 
 		persist = True;
 
-		timeTillCut = time.time() + 0.1;
+		timeTillCut = time.time() + Deadline;
 
 		while persist :
 
@@ -79,6 +75,8 @@ def ProcessConnection() :
 			recivedData = connection.recv(BlockSize);
 
 			if recivedData : 
+
+				print ("Recieved: " + repr(Data));
 
 				timeTillCut = time.time() + 0.1;
 
@@ -94,13 +92,12 @@ def ProcessConnection() :
 
 		return False;
 
+
 	except Exception  as what :
 
 		if repr(what) == "timeout('timed out')" :
 
 			sys.stderr.write("ERROR: " + repr(what) + "\n");
-
-			sys.stderr.flush();
 
 			connection.close();
 
@@ -108,9 +105,7 @@ def ProcessConnection() :
 
 		sys.stderr.write("ERROR: " + repr(what) + "\n");
 
-		sys.stderr.flush();
-
-		sys.exit(1);
+		return True;
 
 
 
@@ -124,7 +119,7 @@ def Entrypoint() :
 
 		Connect();	
 
-		ListenForConnections()
+		ListenForConnections();
 
 		SocketConnection.close();
 
@@ -137,7 +132,7 @@ def Entrypoint() :
 	except socket.error as what :
 
 		sys.stderr.write("ERROR: Could not establish socket connection: " + repr(what) + "\n");
-		
+
 		sys.exit(1);
 
 	except Exception  as what :
