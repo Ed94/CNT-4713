@@ -44,7 +44,7 @@ def ListenForConnections() :
 
 		# SocketConnection.listen(10);
 
-		print("Listening for incoming connections on: " + str(Port));
+		# print("Listening for incoming connections on: " + str(Port));
 
 		ProcessConnection();
 
@@ -58,7 +58,7 @@ def ProcessConnection() :
 
 	connection, address = SocketConnection.accept();
 
-	print("Connection established with: ", address);
+	# print("Connection established with: ", address);
 
 	Data = bytes();
 
@@ -76,7 +76,7 @@ def ProcessConnection() :
 
 		if recivedData : 
 
-			print("Recived: " + recivedData.decode("utf-8"));
+			# print("Recived: " + recivedData.decode("utf-8"));
 
 			timeTillCut += 0.1;
 
@@ -84,13 +84,13 @@ def ProcessConnection() :
 
 			if Data == signal.SIGINT :
 
-				print("SIGINT recieved, exiting gracefully...");
+				# print("SIGINT recieved, exiting gracefully...");
 
 				exit(0);
 
 		if (time.time() >= timeTillCut) :
 
-			print("Exiting persist loop.");
+			# print("Exiting persist loop.");
 
 			persist = False;
 
