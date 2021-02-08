@@ -44,7 +44,7 @@ def ListenForConnections() :
 
 		ProcessConnection();
 
-		time.sleep(1);
+		# time.sleep(1);
 
 
 
@@ -64,9 +64,13 @@ def ProcessConnection() :
 
 	while persist :
 
-		Data += connection.recv(BlockSize);
+		recivedData = connection.recv(BlockSize);
 
-		if Data : 
+		if recivedData : 
+
+			timeTillCut += Deadline;
+
+			Data += recivedData;
 
 			if Data == signal.SIGINT :
 
@@ -78,7 +82,7 @@ def ProcessConnection() :
 
 			persist = False;
 
-	print(repr(Data));
+	print(Data.decode("utf-8"));
 
 	connection.close();
 
