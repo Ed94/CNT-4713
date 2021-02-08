@@ -40,33 +40,13 @@ def ListenForConnections() :
 
 	SocketConnection.listen(10);
 
-
 	while persist :
 
-		try :
-			code = ProcessConnection();
-
-			if code == 0 : 
-				
-				return;
-
-			elif code == 2 : 
-				
-				raise RuntimeError("Timed out");
-
-			time.sleep(0.1);
-
-		except RuntimeError  as what : 
-
-			sys.stderr.write("ERROR: " + repr(what) + "\n");	
-
-			time.sleep(0.1);
-
-		except Exception as what :
-
-			sys.stderr.write("ERROR: " + repr(what) + "\n");		
+		if ProcessConnection() == True :
 
 			return;
+
+		time.sleep(0.1);
 
 
 
@@ -76,57 +56,47 @@ def ProcessConnection() :
 
 	connection, address = SocketConnection.accept();
 
-	# print("Connection established with: ", address);
+	try:
 
-	Data = bytes();
+		Data = bytes();
 
-	connection.send("accio\r\n".encode());
+		connection.send("accio\r\n".encode());
 
-	timeTillCut = 0.0;
+		persist = True;
 
-	deadlineForFirstMessage = time.time() + Deadline;
+		while persist :
 
-	persist = True;
+			recivedData = bytes();
 
-	while persist :
+			connection.settimeout(10);
 
-		recivedData = bytes();
+			recivedData = connection.recv(BlockSize);
 
-		recivedData = connection.recv(BlockSize);
+			if recivedData : 
 
-		if recivedData : 
+				Data += recivedData;
 
-			deadlineForFirstMessage = 0.0;
-			
-			timeTillCut = time.time() + 0.1;
+				if Data == signal.SIGINT or Data.decode("utf-8") == "quit":
 
-			# print("Recived: " + recivedData.decode("utf-8"));
+					return True;
 
-			Data += recivedData;
+		print(len(Data.decode("utf-8")));
 
-			if Data == signal.SIGINT or Data.decode("utf-8") == "quit":
+		connection.close();
 
-				# print("SIGINT recieved, exiting gracefully...");
+		return False;
 
-				return 0;
+	except Exception  as what :
 
-		if (deadlineForFirstMessage > 0.0 and time.time() >= deadlineForFirstMessage) :
-
-			# print("No more data recived within time, exiting gracefully");
+		if repr(what) == "timed out" :
 
 			connection.close();
 
-			return 2;
+			return False;
 
-		elif (timeTillCut > 0.0 and time.time() >= timeTillCut) :
+		sys.stderr.write("ERROR: " + repr(what) + "\n");
 
-			persist = False;
-
-	print(len(Data.decode("utf-8")));
-
-	connection.close();
-
-	return 1;
+		return True;
 
 
 
