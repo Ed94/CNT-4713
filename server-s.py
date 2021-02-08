@@ -66,6 +66,8 @@ def ProcessConnection() :
 
 	timeTillCut = time.time() + Deadline;
 
+	deadlineForFirstMessage = time.time() + Deadline;
+
 	persist = True;
 
 	while persist :
@@ -76,9 +78,11 @@ def ProcessConnection() :
 
 		if recivedData : 
 
+			deadlineForFirstMessage = 0.0;
+
 			# print("Recived: " + recivedData.decode("utf-8"));
 
-			timeTillCut = time.time() + 0.1;
+			# timeTillCut = time.time() + 0.1;
 
 			Data += recivedData;
 
@@ -88,11 +92,15 @@ def ProcessConnection() :
 
 				return True;
 
-		if (time.time() >= timeTillCut) :
+		if (deadlineForFirstMessage > 0.0 and time.time() >= deadlineForFirstMessage) :
 
 			# print("No more data recived within time, exiting gracefully");
 
-			persist = False;
+			raise Exception("Timed out.")
+
+		# elif (time.time() >= timeTillCut) :
+
+		# 	persist = False;
 
 	# print(len(Data.decode("utf-8")));
 
@@ -145,5 +153,3 @@ def Entrypoint() :
 if __name__ == '__main__':
 
 	Entrypoint();
-
-	exit(0);
