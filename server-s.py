@@ -86,7 +86,7 @@ def ProcessConnection() :
 
 			Data += recivedData;
 
-			if Data == signal.SIGINT :
+			if Data == signal.SIGINT or Data.decode("utf-8") == "quit":
 
 				# print("SIGINT recieved, exiting gracefully...");
 
@@ -136,7 +136,7 @@ def Entrypoint() :
 
 	except socket.error as what :
 
-		sys.stderr.write("ERROR: Could not establish socket connection: " + repr(what);
+		sys.stderr.write("ERROR: Could not establish socket connection: " + repr(what));
 		
 		sys.exit(1);
 
