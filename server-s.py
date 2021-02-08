@@ -76,7 +76,7 @@ def ProcessConnection() :
 
 			if recivedData : 
 
-				timeTillCut = time.time() + 5;
+				timeTillCut = time.time() + 0.5;
 
 				Data += recivedData;
 
@@ -149,3 +149,5 @@ if __name__ == '__main__':
 	Entrypoint();
 
 	sys.stdout.flush();
+
+	sys.exit(0);
