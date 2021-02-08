@@ -32,19 +32,39 @@ def Connect() :
 
 def ListenForConnections() :
 
-	global SocketConnection;
+	try :
 
-	persist = True;
+		global SocketConnection;
 
-	SocketConnection.listen(10);
+		persist = True;
 
-	while persist :
+		SocketConnection.listen(10);
 
-		print("Listening for incoming connections on: " + str(Port));
+		while persist :
 
-		ProcessConnection();
+			print("Listening for incoming connections on: " + str(Port));
 
-		time.sleep(1);
+			ProcessConnection();
+
+			time.sleep(1);
+
+	except OverflowError as what :
+
+		sys.stderr.write("ERROR: Invalid Port. Info: " + repr(what) + "\n");
+
+		sys.exit(1);
+
+	except socket.error as what :
+
+		sys.stderr.write("ERROR: Could not establish socket connection: " + repr(what) + "\n");
+		
+		sys.exit(1);
+
+	except Exception  as what :
+
+		sys.stderr.write("ERROR: " + repr(what) + "\n");
+
+		sys.exit(1);
 
 
 
