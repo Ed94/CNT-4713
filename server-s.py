@@ -36,9 +36,13 @@ def ListenForConnections() :
 
 	persist = True;
 
+	SocketConnection.listen(10);
+
+	# SocketConnection.setblocking(False);
+
 	while persist :
 
-		SocketConnection.listen(10);
+		# SocketConnection.listen(10);
 
 		print("Listening for incoming connections on: " + str(Port));
 
@@ -56,6 +60,8 @@ def ProcessConnection() :
 
 	print("Connection established with: ", address);
 
+	Data = bytes();
+
 	connection.send("accio\r\n".encode());
 
 	timeTillCut = time.time() + Deadline;
@@ -70,7 +76,9 @@ def ProcessConnection() :
 
 		if recivedData : 
 
-			timeTillCut += Deadline;
+			print("Recived: " + recivedData.decode("utf-8"));
+
+			timeTillCut += 0.1;
 
 			Data += recivedData;
 
@@ -81,6 +89,8 @@ def ProcessConnection() :
 				exit(0);
 
 		if (time.time() >= timeTillCut) :
+
+			print("Exiting persist loop.");
 
 			persist = False;
 
