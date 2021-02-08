@@ -46,7 +46,7 @@ def ListenForConnections() :
 
 			return;
 
-		time.sleep(0.1);
+		time.sleep(1);
 
 
 
