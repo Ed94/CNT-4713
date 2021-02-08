@@ -70,23 +70,23 @@ def ProcessConnection() :
 
 		while persist :
 
+			if time.time() > timeTillCut :
+
+				break;
+
 			recivedData = bytes();
 
 			recivedData = connection.recv(BlockSize);
 
 			if recivedData : 
 
-				timeTillCut = time.time() + 0.01;
+				timeTillCut = time.time() + Deadline;
 
 				Data += recivedData;
 
 				if Data == signal.SIGINT or Data.decode("utf-8") == "quit":
 
 					return True;
-
-			if time.time() > timeTillCut :
-
-				break;
 
 		print(len(Data.decode("utf-8")));
 
