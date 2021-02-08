@@ -96,7 +96,7 @@ def ProcessConnection() :
 
 	except Exception  as what :
 
-		if repr(what) == "timed out" :
+		if repr(what) == "timeout('timed out')" :
 
 			sys.stderr.write("ERROR: " + repr(what) + "\n");
 
