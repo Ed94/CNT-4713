@@ -86,6 +86,10 @@ def ProcessConnection() :
 
 				persist = False;
 
+				sys.stdout.flush();
+				sys.stdout.flush();
+				sys.stdout.flush();
+
 		if (time.time() >= timeTillCut) :
 
 			# print("No more data recived within time, exiting gracefully");
