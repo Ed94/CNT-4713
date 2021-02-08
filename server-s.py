@@ -64,31 +64,17 @@ def ProcessConnection() :
 
 	while persist :
 
-		if (time.time() >= timeTillCut) :
-
-			raise Exception("Connection timed out.");
-
 		Data += connection.recv(BlockSize);
 
 		if Data : 
-
-			# if Data == signal.SIGQUIT :
-
-			# 	print("SIGQUIT recieved, exiting gracefully...");
-
-			# 	exit(0);
-
-			# if Data == signal.SIGTERM :
-
-			# 	print("SIGTERM recieved, exiting gracefully...");
-
-			# 	exit(0);
 
 			if Data == signal.SIGINT :
 
 				print("SIGINT recieved, exiting gracefully...");
 
 				exit(0);
+
+		if (time.time() >= timeTillCut) :
 
 			persist = False;
 
